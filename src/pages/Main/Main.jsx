@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from "react";
 import useMealStore from "../../Store/random";
 import SearchBar from "../../components/Search/Search";
+import { SearchX } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function Main() {
-  const { meals, loading, fetchMultipleMeals } = useMealStore();
+  const {
+    meals,
+    loading,
+    fetchMultipleMeals,
+    search,
+    fetchSearchMeal,
+    fetchMealById,
+    changevalue,
+  } = useMealStore();
 
   const meal = [
     {
@@ -523,22 +533,24 @@ function Main() {
       dateModified: null,
     },
   ];
-
-  const [query,setquery] = useState(null)
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchMultipleMeals();
+    fetchSearchMeal("");
   }, []);
-
   return (
-    <div className="flex-1 p-4 h-screen overflow-y-scroll">
+    <div className="flex-1 p-4 h-screen overflow-y-scroll scrollbar-thin scrollbar-thumb-orange-600 scrollbar-track-orange-800">
       <div className="justify-end flex w-full">
-        <SearchBar />
+        <SearchBar query={search} callfuntion={fetchSearchMeal} />
       </div>
       <div className="text-2xl font-bold text-orange-800 mt-6 mb-4 pb-2 border-b-2 border-orange-500">
-        Explore Random Meals
+        {search
+          ? `Seach Result for ${search}`
+          : !search
+          ? "Explore Latest Meals"
+          : ""}
       </div>
-      {!meal ? (
+      {loading ? (
         // Skeleton Loader when loading
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {[...Array(6)].map(
@@ -562,9 +574,9 @@ function Main() {
             )
           )}
         </div>
-      ) : (
+      ) : meals ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {meal.map((meal, index) => (
+          {meals.map((meal, index) => (
             <div
               key={index}
               className="bg-white rounded-lg shadow-lg overflow-hidden border border-orange-200"
@@ -596,14 +608,58 @@ function Main() {
 
                 {/* View Details Button */}
                 <button
-                  className="mt-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => alert(`Opening details for ${meal.strMeal}`)}
+                  className="mt-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg"
+                  onClick={() => {
+                    navigate(`/${meal.idMeal}/${meal.strMeal}`);
+                  }}
                 >
                   View Details
                 </button>
               </div>
             </div>
           ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+          <div className="bg-orange-100 rounded-full p-6 mb-6">
+            <SearchX size={64} className="text-orange-500" />
+          </div>
+
+          <h2 className="text-2xl font-bold text-gray-800 mb-3">
+            No recipes found
+          </h2>
+
+          {search && (
+            <p className="text-gray-600 mb-6">
+              We couldn't find any recipes matching "
+              <span className="font-medium text-orange-500 italic ">
+                {search}
+              </span>
+              "
+            </p>
+          )}
+
+          <div className="flex flex-col sm:flex-row gap-4 mt-2">
+            <button
+              className="px-6 py-2 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-colors"
+              onClick={() => {
+                changevalue("search", ""); // Clear the search state in the Zustand store
+                fetchSearchMeal(""); // Clear the search results
+              }}
+            >
+              Clear Search
+            </button>
+          </div>
+
+          <div className="mt-8 p-4 bg-orange-50 rounded-lg max-w-md">
+            <h3 className="font-semibold mb-2 text-gray-700">Suggestions:</h3>
+            <ul className="text-gray-600 text-left pl-4">
+              <li className="mb-1">• Check your spelling</li>
+              <li className="mb-1">• Try more general keywords</li>
+              <li className="mb-1">• Try a different search term</li>
+              <li>• Browse our categories for inspiration</li>
+            </ul>
+          </div>
         </div>
       )}
     </div>

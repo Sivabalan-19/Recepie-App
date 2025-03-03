@@ -26,7 +26,8 @@ export const httpRequest = async (options, includeToken = false) => {
   }
 };
 
-
 export const endpoint = {
-    RANDOM_MEAL: "https://www.themealdb.com/api/json/v1/1/random.php",
-}
+  RANDOM_MEAL: "https://www.themealdb.com/api/json/v1/1/random.php",
+  SEARCH_MEAL: "https://www.themealdb.com/api/json/v1/1/search.php?s=",
+  ID_MEAL: "https://www.themealdb.com/api/json/v1/1/lookup.php?i=",
+};
