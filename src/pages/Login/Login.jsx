@@ -19,7 +19,7 @@ function Login() {
         </div>
         <button
           className="mt-10 text-white rounded-[4px] bg-[#fa5514] px-10 py-4"
-          onClick={() => navigate("/main/home")}
+          onClick={() => navigate("/home")}
         >
           Get Started
         </button>

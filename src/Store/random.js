@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import axios from "axios";
+import { create } from "zustand";
 import { endpoint } from "../utils"; // Ensure this points to your API URL
 
 const useMealStore = create((set, get) => ({
@@ -7,11 +7,48 @@ const useMealStore = create((set, get) => ({
   selectedMeal: null,
   meals: [],
   search: "",
+
+  CategoriesList: null,
+  AreaList: null,
+  IngridientsList: null,
+
+  selectedCategory: null,
+  selectedArea: null,
+  selectedIngridient: null,
+
   loading: false,
   error: null,
 
-  changevalue: (variable, value) => {
-    set({ [variable]: value });
+  changevalue: (variable, value, dropdownstate) => {
+    console.log(variable);
+    if (dropdownstate === "Categories") {
+      set({
+        selectedCategory: value,
+        selectedArea: null,
+        selectedIngridient: null,
+      });
+    } else if (dropdownstate === "Area") {
+      set({
+        selectedArea: value,
+        selectedCategory: null,
+        selectedIngridient: null,
+      });
+    } else if (dropdownstate === "Ingridients") {
+      set({
+        selectedIngridient: value,
+        selectedCategory: null,
+        selectedArea: null,
+      });
+    } else if (dropdownstate === "Search") {
+      set({
+        search: value,
+        selectedCategory: null,
+        selectedArea: null,
+        selectedIngridient: null,
+      });
+    } else {
+      set({ [variable]: value });
+    }
   },
 
   // Fetch a single random meal (for the Random page)
@@ -77,6 +114,75 @@ const useMealStore = create((set, get) => ({
       const meals = searchResponse.data.meals;
 
       set({ meals, loading: false });
+    } catch (err) {
+      set({ error: "Failed to fetch meals", loading: false });
+    }
+  },
+
+  fetchCategoryList: async (id) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.get(`${endpoint.CATEGORIES}`);
+      set({ CategoriesList: response.data.meals, loading: false });
+    } catch (err) {
+      set({ error: "Failed to fetch meals", loading: false });
+    }
+  },
+
+  fetchAreaList: async (id) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.get(`${endpoint.AREA}`);
+      set({ AreaList: response.data.meals, loading: false });
+    } catch (err) {
+      set({ error: "Failed to fetch meals", loading: false });
+    }
+  },
+
+  fetchIngridientsList: async (id) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.get(`${endpoint.INGRIDIENTS}`);
+      set({ IngridientsList: response.data.meals, loading: false });
+    } catch (err) {
+      set({ error: "Failed to fetch meals", loading: false });
+    }
+  },
+  fetchByCategory: async (value) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.get(
+        value
+          ? `${endpoint.GET_BY_CATEGORY}${value?.strCategory}`
+          : `${endpoint.SEARCH_MEAL}`
+      );
+      set({ meals: response.data.meals, loading: false });
+    } catch (err) {
+      set({ error: "Failed to fetch meals", loading: false });
+    }
+  },
+  fetchByIngridients: async (value) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.get(
+        value
+          ? `${endpoint?.GET_BY_INGRIDIENT}${value?.strIngredient}`
+          : `${endpoint?.GET_BY_INGRIDIENT}`
+      );
+      set({ meals: response.data.meals, loading: false });
+    } catch (err) {
+      set({ error: "Failed to fetch meals", loading: false });
+    }
+  },
+  fetchByArea: async (value) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.get(
+        value
+          ? `${endpoint?.GET_BY_AREA}${value?.strArea}`
+          : `${endpoint.SEARCH_MEAL}`
+      );
+      set({ meals: response.data.meals, loading: false });
     } catch (err) {
       set({ error: "Failed to fetch meals", loading: false });
     }

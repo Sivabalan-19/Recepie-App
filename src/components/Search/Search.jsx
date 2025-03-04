@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import { Search, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import useMealStore from "../../Store/random";
 
 const SearchBar = ({
@@ -20,7 +20,7 @@ const SearchBar = ({
 
   const handleChange = (e) => {
     const value = e.target.value;
-    changevalue("search", value);
+    changevalue("search", value, "Search");
     if (e.target.value == "") {
       callfuntion("");
     }
