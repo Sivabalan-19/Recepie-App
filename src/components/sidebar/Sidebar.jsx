@@ -1,10 +1,9 @@
+import { Heart, Home } from "lucide-react";
 import React, { useState } from "react";
-import { Home, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ size = "md" }) => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState("home");
 
   const sizeConfig = {
@@ -15,10 +14,6 @@ const Sidebar = ({ size = "md" }) => {
   };
 
   const current = sizeConfig[size] || sizeConfig.md;
-
-  const onNavigate = (page) => {
-    setSelectedItem(page);
-  };
 
   return (
     <div
@@ -35,7 +30,6 @@ const Sidebar = ({ size = "md" }) => {
       <ul className="space-y-4">
         {[
           { id: "/home", label: "Home", icon: Home },
-          { id: "favourites", label: "Favourites", icon: Heart },
           { id: "random", label: "Random", icon: Heart },
         ].map(({ id, label, icon: Icon }) => (
           <li key={id} className="relative">

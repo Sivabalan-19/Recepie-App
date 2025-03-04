@@ -10,12 +10,12 @@ function App() {
   return (
     <div className="w-screen h-screen">
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/" element={<Home />}>
           <Route path="home" element={<Main />} />
           <Route path="random" element={<Random />} />
           {/* Adjust the path so it's directly under the Home route */}
-          <Route path="/:id/:name" element={<SingleDish />} />
+          <Route path=":id/:name" element={<SingleDish />} />
         </Route>
       </Routes>
     </div>
