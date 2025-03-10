@@ -20,7 +20,7 @@ const useMealStore = create((set, get) => ({
   error: null,
 
   changevalue: (variable, value, dropdownstate) => {
-    console.log(variable);
+
     if (dropdownstate === "Categories") {
       set({
         selectedCategory: value,

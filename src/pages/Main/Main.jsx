@@ -30,7 +30,6 @@ function Main() {
   } = useMealStore();
 
   const navigate = useNavigate();
-  console.log(selectedCategory, selectedArea, selectedIngridient);
   useEffect(() => {
     fetchCategoryList();
     fetchAreaList();
@@ -46,7 +45,6 @@ function Main() {
     }
   }, []);
 
-  console.log(selectedCategory, selectedArea, selectedIngridient);
   return (
     <div className="flex-1 p-4 h-screen overflow-y-scroll scrollbar-thin scrollbar-thumb-orange-600 scrollbar-track-orange-800">
       <div className="justify-end flex w-full">
