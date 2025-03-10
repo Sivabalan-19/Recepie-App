@@ -1,10 +1,11 @@
+// Sidebar.jsx
 import { Heart, Home } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ size = "md" }) => {
   const navigate = useNavigate();
-  const [selectedItem, setSelectedItem] = useState("home");
+  const [selectedItem, setSelectedItem] = useState("/home");
 
   const sizeConfig = {
     s: { width: "w-40", padding: "p-2", iconSize: 16, headerText: "text-base" },
@@ -15,13 +16,18 @@ const Sidebar = ({ size = "md" }) => {
 
   const current = sizeConfig[size] || sizeConfig.md;
 
+  const handleItemClick = (id) => {
+    setSelectedItem(id);
+    navigate(id);
+  };
+
   return (
     <div
-      className={`hidden md:block bg-white text-gray-800 px-0 shadow-md h-screen ${current.width} ${current.padding}`}
+      className={`hidden md:block bg-white text-gray-800 shadow-md h-screen ${current.width} ${current.padding}`}
     >
       {/* Sidebar Header */}
       <h2
-        className={`${current.headerText}  font-bold mb-6 text-orange-600 pl-4`}
+        className={`${current.headerText} font-bold mb-6 text-orange-600 pl-4`}
       >
         Recipe App
       </h2>
@@ -34,11 +40,11 @@ const Sidebar = ({ size = "md" }) => {
         ].map(({ id, label, icon: Icon }) => (
           <li key={id} className="relative">
             <button
-              onClick={() => navigate(id)}
+              onClick={() => handleItemClick(id)}
               className={`w-full text-left pl-10 rounded transition-all duration-300 ease-in-out hover:bg-orange-50 focus:outline-none flex items-center p-2 gap-3 ${
                 selectedItem === id
                   ? "text-orange-600 font-medium bg-orange-50"
-                  : ""
+                  : "text-gray-600"
               }`}
             >
               <Icon
