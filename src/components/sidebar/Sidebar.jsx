@@ -27,9 +27,9 @@ const Sidebar = ({ size = "md" }) => {
     >
       {/* Sidebar Header */}
       <h2
-        className={`${current.headerText} font-bold mb-6 text-orange-600 pl-4`}
+        className={`${current.headerText} flex  justify-center font-bold mb-6 text-orange-600 pl-4`}
       >
-        Recipe App
+        Tasty Trove
       </h2>
 
       {/* Sidebar Navigation */}
