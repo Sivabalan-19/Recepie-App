@@ -1,6 +1,6 @@
 
 
--   🌟 Learn React + Tailwind + EDAMAM API
+-   🌟 Learn React + Tailwind 
 -   🎃 Build Responsive Design
 -   🚀 Deploy for FREE!
 
