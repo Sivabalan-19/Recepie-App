@@ -1,8 +1,4 @@
-# Build a Recipe Finder for Your Mom | React & TailwindCSS
 
-![Demo App](/public/Screenshot_29.png)
-
-[Video Tutorial on Youtube](https://youtu.be/Z_AWfuJXXCI)
 
 -   🌟 Learn React + Tailwind + EDAMAM API
 -   🎃 Build Responsive Design
@@ -10,12 +6,10 @@
 
 # Run Locally
 
-### Setup .env file
-
-```js
-VITE_APP_ID = your_edamam_app_id;
-VITE_APP_KEY = your_edamam_app_key;
+```shel
+https://flavorescape.vercel.app/
 ```
+
 
 ### Install dependencies
 
